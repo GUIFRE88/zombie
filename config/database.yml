@@ -19,6 +19,7 @@ default: &default
   host: <%= ENV["POSTGRES_HOST"] %>
   user: <%= ENV["POSTGRES_USER"] %>
   password: <%= ENV["POSTGRES_PASSWORD"] %>
+  port: 5432
 
 development:
   <<: *default
@@ -40,7 +41,7 @@ development:
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  #port: 5432
+  
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -81,5 +82,3 @@ test:
 production:
   <<: *default
   database: app_production
-  username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>

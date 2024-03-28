@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para buildar o projeto
+docker compose build
 
-Things you may want to cover:
+Para startar o projeto
+docker compose up
 
-* Ruby version
+Cria a banco
+docker-compose run zombie bin/rails db:create
 
-* System dependencies
+Roda as migrations
+docker-compose run zombie bin/rails db:migrate
 
-* Configuration
+Entrar no bash
+docker compose run zombie bash
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 * ...
