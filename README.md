@@ -16,6 +16,8 @@ Roda as migrations
 rails db:migrate
 
 
+Roda o Rspec, dentro do bash
+bundle exec rspec
 
 
 
