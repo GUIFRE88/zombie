@@ -14,6 +14,7 @@ gem "puma", ">= 5.0"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
 
+gem 'will_paginate', '~> 4.0'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
