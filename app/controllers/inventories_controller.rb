@@ -8,12 +8,20 @@ class InventoriesController < ApplicationController
   end
 
   def create
-    response = inventory_service.create(inventory_params)
-    render json: response
+    begin
+      response = inventory_service.create(inventory_params)
+      render json: response
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   def destroy
-    @inventory.really_destroy!
+    begin
+      @inventory.really_destroy!
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   private
@@ -23,7 +31,7 @@ class InventoriesController < ApplicationController
   end
 
   def inventory_params
-    params.require(:inventory).permit(:item, :point, :user_id)
+    params.require(:inventory).permit(:item, :quantity, :user_id)
   end
 
   def inventory_service

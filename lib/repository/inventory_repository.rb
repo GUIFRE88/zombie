@@ -1,12 +1,13 @@
 class InventoryRepository
 
   def create(inventory_params)
-    @inventory = Inventory.new(inventory_params)
+    inventory = Inventory.where(item: inventory_params[:item], user_id: inventory_params[:user_id])&.first
+    inventory.quantity += inventory_params[:quantity] if inventory.present?
 
-    if @inventory.save
-      return { inventory: @inventory, message: 'Item criado com sucesso !' }, status: '200'
+    if inventory.present? && inventory.save
+      return { inventory: inventory, message: 'Quantidade adicionada com sucesso no inventário !' }, status: '200'
     else
-      return { message: 'Problema ao criar item !' }, status: '422'
+      return { message: 'Problema ao adicionar o item no inventário !' }, status: '422'
     end
   end
 
@@ -18,4 +19,10 @@ class InventoryRepository
     end
   end
 end
+
+{
+"item":"comida",
+"user_id":23,
+"quantity": 2
+}
 

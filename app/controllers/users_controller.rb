@@ -10,17 +10,29 @@ class UsersController < ApplicationController
   end
 
   def create
-    response = user_service.create_user(user_params)
-    render json: { user: response[:user], message: response[:message] }, status: response[:status]
+    begin
+      response = user_service.create_user(user_params)
+      render json: { user: response[:user], message: response[:message] }, status: response[:status]
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   def update
-    response = user_service.update_user(params)
-    render json: { user: response[:user], message: response[:message] }, status: response[:status]
+    begin
+      response = user_service.update_user(params)
+      render json: { user: response[:user], message: response[:message] }, status: response[:status]
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   def destroy
-    render json: user_service.destroy_user(@user)
+    begin
+      render json: user_service.destroy_user(@user)
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   private

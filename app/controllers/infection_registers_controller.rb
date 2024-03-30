@@ -2,7 +2,11 @@
 
 class InfectionRegistersController < ApplicationController
   def create
-    render json: infection_register_service.mark_as_infected(params[:user_id],params[:user_id_infected])
+    begin
+      render json: infection_register_service.mark_as_infected(params[:user_id],params[:user_id_infected])
+    rescue StandardError => e
+      render json: { message: 'Internal Server Error', error: e }, status: '500'  
+    end
   end
 
   private
