@@ -5,7 +5,7 @@ class UserRepository
     if user.save
       return { status: '200', user: user, message: 'Usuário criado com sucesso !' }
     else
-      return { status: '400', message: 'Não foi possível criar o usuário !' }
+      return { status: '422', message: user.errors }
     end
   end
 
@@ -21,6 +21,6 @@ class UserRepository
         return { status: '200', user: user, message: 'Usuário alterado com sucesso !' }
       end
     end
-    return { status: '400', message: 'Não foi possível alterar o usuário !' }
+    return { status: '422', message: 'Não foi possível alterar o usuário !' }
   end
 end

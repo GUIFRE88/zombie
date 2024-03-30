@@ -16,6 +16,8 @@ gem "cssbundling-rails"
 
 gem 'will_paginate', '~> 4.0'
 
+gem 'paranoia', '~> 2.6', '>= 2.6.3'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

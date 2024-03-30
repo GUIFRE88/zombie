@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :destroy]
+  before_action :set_user, only: [:show, :destroy]
 
   def index
     render json: User.all.paginate(page: params[:page], per_page: 30)
@@ -20,12 +20,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy if @user.present?
+    @user.really_destroy! if @user.present?
   end
 
   private
 
-  def find_user
+  def set_user
     @user = User.find_by_id(params[:id]) if params[:id].present?
   end
 
