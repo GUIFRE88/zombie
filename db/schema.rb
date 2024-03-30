@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_30_104341) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "block", default: false
+    t.datetime "deleted_at"
   end
 
   add_foreign_key "infection_registers", "users"

@@ -13,6 +13,14 @@ class UserService
     return user_repository.update_user(params_user)
   end
 
+  def destroy_user(user)
+    if user.present?
+      return user_repository.destroy_user(user)
+    else
+      return { status: '422', message: 'Usuário não encontrado !' }
+    end
+  end
+
   private
 
   def user_repository

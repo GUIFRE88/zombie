@@ -23,4 +23,13 @@ class UserRepository
     end
     return { status: '422', message: 'Não foi possível alterar o usuário !' }
   end
+
+  def destroy_user(user)
+    if user.really_destroy!
+      return { status: '200', message: 'Usuário excluído com sucesso !' }
+    else
+      return { status: '422', message: user.errors }
+    end
+  end
+
 end

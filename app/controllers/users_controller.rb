@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.really_destroy! if @user.present?
+    render json: user_service.destroy_user(@user)
   end
 
   private
