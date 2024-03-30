@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :create, :destroy, :update, :show]
   resources :inventories, only: [:index, :create, :destroy]
-  resources :exchange, only: [:create]
+  resources :exchanges, only: [:create]
+  resources :reports, only: [:index]
   
 
   post 'mark_infected', to: 'infection_registers#create'

@@ -12,13 +12,13 @@ class ExchangesController < ApplicationController
     
     begin
       if user1_points != user2_points
-        render json: { message: 'A quantidade de pontos não correspondem !' }, status: '422'  
+        render json: { message: 'A quantidade de pontos não correspondem, portanto não poderá ser feito a troca !' }, status: '422'  
       else
-        remove_itens(user: @user1, itens: user1_items)
-        add_itens(user: @user1, itens: user2_items)
+        remove_itens(items: user1_items)
+        add_itens(user: @user1, items: user2_items)
 
-        remove_itens(user: @user2, itens: user2_items)
-        add_itens(user: @user2, itens: user1_items)
+        remove_itens(items: user2_items)
+        add_itens(user: @user2, items: user1_items)
 
         render json: { message: 'Escambo finalizado com sucesso !' }, status: '200'  
       end
@@ -29,7 +29,7 @@ class ExchangesController < ApplicationController
 
   private
 
-  def remove_itens
+  def remove_itens(items:)
     items.each do |id, quantity|
       item = Inventory.find_by_id(id)
       item.quantity -= quantity.to_i
@@ -37,11 +37,12 @@ class ExchangesController < ApplicationController
     end
   end
 
-  def add_itens
+  def add_itens(user:, items:)
     items.each do |id, quantity|
       item = Inventory.find_by_id(id)
-      item.quantity += quantity.to_i
-      item.save
+      item_user = user.inventories.where(item: item.item)&.first
+      item_user.quantity += quantity.to_i
+      item_user.save
     end
   end
 
@@ -49,7 +50,7 @@ class ExchangesController < ApplicationController
     points = 0
     items.each do |id, quantity|
       item = Inventory.find_by_id(id)
-      points += item.points * quantity.to_i
+      points += item.point * quantity.to_i
     end
     points
   end
