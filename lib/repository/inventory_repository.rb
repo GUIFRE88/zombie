@@ -18,11 +18,57 @@ class InventoryRepository
       return Inventory.all.paginate(page: params[:page], per_page: 30)
     end
   end
+
+  def exchanges(params, user_first, user_second)
+    user_first_items = params[:user_first_items]
+    user_second_items = params[:user_second_items]
+
+    user_first_points = calculate_points(user_first_items)
+    user_second_points = calculate_points(user_second_items)
+
+    begin
+      if user_first_points != user_second_points
+        return { message: 'A quantidade de pontos não correspondem, portanto não poderá ser feito a troca !' }, status: '422'  
+      else
+        remove_itens(items: user_first_items)
+        add_itens(user: @user_first, items: user_second_items)
+
+        remove_itens(items: user_second_items)
+        add_itens(user: @user_second, items: user_first_items)
+
+        return { message: 'Escambo finalizado com sucesso !' }, status: '200'  
+      end
+    rescue StandardError => e
+      return { message: 'Internal Server Error', error: e }, status: '500'  
+    end
+  end
+
+  private
+
+  def remove_itens(items:)
+    items.each do |id, quantity|
+      item = Inventory.find_by_id(id)
+      item.quantity -= quantity.to_i
+      item.save
+    end
+  end
+
+  def add_itens(user:, items:)
+    items.each do |id, quantity|
+      item = Inventory.find_by_id(id)
+      item_user = user.inventories.where(item: item.item)&.first
+      item_user.quantity += quantity.to_i
+      item_user.save
+    end
+  end
+
+  def calculate_points(items)
+    points = 0
+    items.each do |id, quantity|
+      item = Inventory.find_by_id(id)
+      points += item.point * quantity.to_i
+    end
+    points
+  end
+
 end
-
-{
-"item":"comida",
-"user_id":23,
-"quantity": 2
-}
-

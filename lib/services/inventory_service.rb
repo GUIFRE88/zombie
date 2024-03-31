@@ -8,6 +8,10 @@ class InventoryService
     inventory_repository.index(params)
   end
 
+  def exchanges(params, user_first, user_second)
+    inventory_repository.exchanges(params, user_first, user_second)
+  end
+
   private
 
   def inventory_repository
