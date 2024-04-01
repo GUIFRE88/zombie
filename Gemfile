@@ -48,6 +48,7 @@ group :development, :test do
   gem "byebug"
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'factory_bot_rails', '~> 6.2'
 end
 
 
