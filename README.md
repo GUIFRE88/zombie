@@ -148,3 +148,9 @@ Para trazer o relatório basta fazer uma solicitação **GET** para a rota `http
 ---
 
 ## Evidência de testes
+
+### Para rodar os testes basta entrar no bash e usar o comando `bundle exec rspec` 
+
+### Evidência dos testes executados
+
+![Rspec](rspec-testes.png)

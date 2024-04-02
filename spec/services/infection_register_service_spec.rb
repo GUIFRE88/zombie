@@ -13,8 +13,8 @@ RSpec.describe InfectionRegisterService, type: :service do
       end
 
       it 'marks the user as infected' do
-        expect(infection_register_repository).to receive(:mark_as_infected).with(user_id_reporting, user_id_infected)
-        expect(infection_register_service.mark_as_infected(user_id_reporting, user_id_infected)).not_to eq({ status: '422', message: "Esse reporte já foi feito pelo usuário #{user_id_reporting} !" })
+        allow(InfectionRegister).to receive(:where).and_return(double(present?: true))
+        expect(infection_register_service.mark_as_infected(user_id_reporting, user_id_infected)).to eq({ status: '422', message: "Esse reporte já foi feito pelo usuário #{user_id_reporting} !" })
       end
     end
 

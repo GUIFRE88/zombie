@@ -5,5 +5,9 @@ FactoryBot.define do
     gender { 'M' }
     latitude { 40.7128 }
     longitude { -74.006 }
+    trait :infected do
+      deleted_at { Time.now }
+    end
   end
 end
+

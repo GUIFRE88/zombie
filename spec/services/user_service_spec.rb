@@ -24,8 +24,10 @@ RSpec.describe UserService, type: :service do
     let(:params_user) { { name: 'John', age: 25, gender: 'M' } }
 
     it 'creates a new user' do
-      expect(user_repository).to receive(:create_user).with(params_user)
-      user_service.create_user(params_user)
+      response  = user_service.create_user(params_user)
+      
+      expect(response[:status]).to eq('200')
+      expect(response[:message]).to eq('Usuário criado com sucesso !')
     end
   end
 
@@ -33,16 +35,21 @@ RSpec.describe UserService, type: :service do
     let(:params_user) { { id: user.id, name: 'Updated Name' } }
 
     it 'updates the user' do
-      expect(user_repository).to receive(:update_user).with(params_user)
-      user_service.update_user(params_user)
+      response  = user_service.update_user(params_user)
+
+      expect(response[:status]).to eq('200')
+      expect(response[:message]).to eq('Usuário alterado com sucesso !')
+
     end
   end
 
   describe '#destroy_user' do
     context 'when user is present' do
       it 'destroys the user' do
-        expect(user_repository).to receive(:destroy_user).with(user)
-        user_service.destroy_user(user)
+        response  = user_service.destroy_user(user)
+
+        expect(response[:status]).to eq('200')
+        expect(response[:message]).to eq('Usuário excluído com sucesso !')
       end
     end
 

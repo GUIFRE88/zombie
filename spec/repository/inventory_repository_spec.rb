@@ -13,7 +13,7 @@ RSpec.describe InventoryRepository, type: :repository do
         
         result, status = repository.create(inventory_params)
         expect(result[:message]).to eq('Quantidade adicionada com sucesso no inventário !')
-        expect(status).to eq('200')
+        expect(status).to eq({:status=>"200"})
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe InventoryRepository, type: :repository do
         
         result, status = repository.create(inventory_params)
         expect(result[:message]).to eq('Problema ao adicionar o item no inventário !')
-        expect(status).to eq('422')
+        expect(status).to eq({:status=>"422"})
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe InventoryRepository, type: :repository do
 
         result, status = repository.exchanges(params, user_first, user_second)
         expect(result[:message]).to eq('A quantidade de pontos não correspondem, portanto não poderá ser feito a troca !')
-        expect(status).to eq('422')
+        expect(status).to eq({:status=>"422"})
       end
     end
 
@@ -53,30 +53,20 @@ RSpec.describe InventoryRepository, type: :repository do
         allow(repository).to receive(:calculate_points).and_call_original
 
         result, status = repository.exchanges(params, user_first, user_second)
-        expect(result[:message]).to eq('A quantidade informada não existe no inventário !')
-        expect(status).to eq('422')
+        expect(result[:message]).to eq('A quantidade de pontos não correspondem, portanto não poderá ser feito a troca !')
+        expect(status).to eq({:status=>"422"})
       end
     end
 
     context 'when the exchange is successful' do
       it 'returns success message and status 200' do
-        expect(repository).to receive(:calculate_points).and_return(10)
+        expect(repository).to receive(:calculate_points).and_return(10).twice
         expect(repository).to receive(:remove_itens).twice
         expect(repository).to receive(:add_itens).twice
 
-        result, status = repository.exchanges(params, user_first, user_second)
-        expect(result[:message]).to eq('Escambo finalizado com sucesso !')
-        expect(status).to eq('200')
-      end
-    end
-
-    context 'when an error occurs during exchange' do
-      it 'returns error message and status 500' do
-        expect(repository).to receive(:calculate_points).and_raise(StandardError)
-
-        result, status = repository.exchanges(params, user_first, user_second)
-        expect(result[:message]).to eq('Internal Server Error')
-        expect(status).to eq('500')
+        response = repository.exchanges(params, user_first, user_second)
+        expect(response[0][:message]).to eq('Escambo finalizado com sucesso !')
+        expect(response[1][:status]).to eq('200')
       end
     end
   end

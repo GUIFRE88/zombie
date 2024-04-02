@@ -26,7 +26,7 @@ class InventoryRepository
   def exchanges(params, user_first, user_second)
     user_first_items = params[:user_first_items]
     user_second_items = params[:user_second_items]
-
+    
     user_first_points = calculate_points(user_first_items)
     user_second_points = calculate_points(user_second_items)
 
