@@ -10,8 +10,8 @@ class ExchangesController < ApplicationController
   private
 
   def set_users
-    @user_first = User.find(params[:user1_id])
-    @user_second = User.find(params[:user2_id])
+    @user_first = User.find(params[:user_first_id])
+    @user_second = User.find(params[:user_second_id])
   end
 
   def inventory_service

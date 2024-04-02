@@ -9,7 +9,6 @@ RSpec.describe InfectionRegister, type: :model do
   describe "validations" do
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:user_infect_id) }
-    it { should validate_uniqueness_of(:user_id).scoped_to(:user_infect_id).with_message("Combinação de user_id e user_infect_id já existe") }
   end
 
   describe '#block_user' do

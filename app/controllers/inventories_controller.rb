@@ -19,6 +19,7 @@ class InventoriesController < ApplicationController
   def destroy
     begin
       @inventory.really_destroy!
+      render json: { message: 'Inventário excluido com sucesso' }, status: '200'  
     rescue StandardError => e
       render json: { message: 'Internal Server Error', error: e }, status: '500'  
     end

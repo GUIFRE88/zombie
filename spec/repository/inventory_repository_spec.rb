@@ -50,7 +50,7 @@ RSpec.describe InventoryRepository, type: :repository do
     context 'when the quantity is not enough' do
       it 'returns error message and status 422' do
         expect(repository).to receive(:calculate_points).and_return(10)
-        allow(repository).to receive(:calculate_points).and_call_original
+        expect(repository).to receive(:calculate_points).and_return(11)
 
         result, status = repository.exchanges(params, user_first, user_second)
         expect(result[:message]).to eq('A quantidade de pontos não correspondem, portanto não poderá ser feito a troca !')

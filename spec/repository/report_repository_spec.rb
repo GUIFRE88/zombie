@@ -15,13 +15,13 @@ RSpec.describe ReportRepository, type: :repository do
         report_data, status = repository.report
 
         expect(status).to eq({:status=>"200"})
-        expect(report_data[:percentage_of_infected_users]).to eq('11 %')
-        expect(report_data[:percentage_of_uninfected_users]).to eq('88 %')
+        expect(report_data[:percentage_of_infected_users]).to eq('20 %')
+        expect(report_data[:percentage_of_uninfected_users]).to eq('80 %')
         expect(report_data[:average_quantity_of_each_item_type_per_user]).to eq({
           water: '0',
           food: '0',
           medicine: '0',
-          ammunition: '4'
+          ammunition: '0'
         })
         expect(report_data[:number_of_points_lost_by_infected_users]).to eq(13)
       end

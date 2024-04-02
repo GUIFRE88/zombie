@@ -36,11 +36,11 @@ class InventoryRepository
       elsif !@quantity_enough
         return { message: 'A quantidade informada não existe no inventário !' }, status: '422'
       else
+        add_itens(user: user_first, items: user_second_items)
+        add_itens(user: user_second, items: user_first_items)
+        
         remove_itens(items: user_first_items)
-        add_itens(user: @user_first, items: user_second_items)
-
         remove_itens(items: user_second_items)
-        add_itens(user: @user_second, items: user_first_items)
 
         return { message: 'Escambo finalizado com sucesso !' }, status: '200'  
       end
@@ -60,6 +60,8 @@ class InventoryRepository
   end
 
   def add_itens(user:, items:)
+    return unless user.present?
+
     items.each do |id, quantity|
       item = Inventory.find_by_id(id)
       item_user = user.inventories.where(item: item.item)&.first

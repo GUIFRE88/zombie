@@ -72,7 +72,7 @@ Para listar apenas um usuário envie uma solicitação **DELETE** para a rota `h
 
 ### 2 - Inventário (inventory)
 
-#### 2.1 - Adicionar um item no inventáro (create inventory)
+#### 2.1 - Adicionar um item no inventáro (Add Item in Inventory)
 
 Para adicionar um item no iventário do usuário, envie uma solicitação **POST** para a rota `http://0.0.0.0:3000/inventories` com o seguinte **BODY**:
 
@@ -86,6 +86,7 @@ Para adicionar um item no iventário do usuário, envie uma solicitação **POST
 ```
 
 Obs. Os valores do item são `['água', 'comida', 'medicamento', 'munição'] `. E o user_id representa o valor do usuário que será adicionado o item do inventário.
+Essaação apenas irá atualizar a quantidade do item no iventário.
 
 #### 2.2 - Listar itens do inventário (index inventory)
 
